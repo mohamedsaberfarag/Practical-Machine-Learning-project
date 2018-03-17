@@ -1,9 +1,14 @@
-
-# 1. Data
+---
+title: "Practical Machine Learning Project"
+author: "Mohamed Saber"
+date: "March 17, 2018"
+---
+Data
 The training data for this project are available here:
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
 The test data are available here:
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+```{r}
 library(caret); library(rpart);library(ggplot2);library(randomForest)
 ## Loading required package: lattice
 ## Loading required package: ggplot2
@@ -14,14 +19,44 @@ library(caret); library(rpart);library(ggplot2);library(randomForest)
 ## The following object is masked from 'package:ggplot2':
 ## 
 ##     margin
-2.1.Loading Data
-CHeck the training and testing data, identifying the missing data, “NA” and “#DIV/0!” as “NA” everywhere.
+```
+
+Loading Data
+At the begin, check the training and testing data, identifying the missing data, “NA” and “#DIV/0!” as “NA” everywhere.
+```{r}
 url.train <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
 url.test <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
 training <- read.csv(url(url.train), na.strings = c("NA", "", "#DIV0!"))
 testing <- read.csv(url(url.test), na.strings = c("NA", "", "#DIV0!"))
+```
+
 We need to define the same columns
+```{r}
 sameColumsName <- colnames(training) == colnames(testing)
 colnames(training)[sameColumsName==FALSE]
 ## [1] "classe"
+```
+
 Therefore,the “classe” is not included in the testing data.
+
+Data Cleaning
+```{r}
+training<-training[,colSums(is.na(training)) == 0]
+testing <-testing[,colSums(is.na(testing)) == 0]
+```
+
+Checking the column names of traning dataset
+```{r}
+head(colnames(training))
+## [1] "X"                    "user_name"            "raw_timestamp_part_1"
+## [4] "raw_timestamp_part_2" "cvtd_timestamp"       "new_window"
+```.
+```{r}
+
+```.
+```{r}
+
+```.
+```{r}
+
+```
