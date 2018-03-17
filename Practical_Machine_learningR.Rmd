@@ -1,0 +1,27 @@
+
+# 1. Data
+The training data for this project are available here:
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv
+The test data are available here:
+https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
+library(caret); library(rpart);library(ggplot2);library(randomForest)
+## Loading required package: lattice
+## Loading required package: ggplot2
+## randomForest 4.6-12
+## Type rfNews() to see new features/changes/bug fixes.
+## 
+## Attaching package: 'randomForest'
+## The following object is masked from 'package:ggplot2':
+## 
+##     margin
+2.1.Loading Data
+CHeck the training and testing data, identifying the missing data, “NA” and “#DIV/0!” as “NA” everywhere.
+url.train <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+url.test <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+training <- read.csv(url(url.train), na.strings = c("NA", "", "#DIV0!"))
+testing <- read.csv(url(url.test), na.strings = c("NA", "", "#DIV0!"))
+We need to define the same columns
+sameColumsName <- colnames(training) == colnames(testing)
+colnames(training)[sameColumsName==FALSE]
+## [1] "classe"
+Therefore,the “classe” is not included in the testing data.
