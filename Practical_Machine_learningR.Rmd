@@ -15,6 +15,7 @@ https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
 ```{r}
 library(caret); library(rpart);library(ggplot2);library(randomForest)
+
 ## Loading required package: lattice
 ## Loading required package: ggplot2
 ## randomForest 4.6-12
@@ -41,6 +42,7 @@ We need to define the same columns
 ```{r}
 sameColumsName <- colnames(training) == colnames(testing)
 colnames(training)[sameColumsName==FALSE]
+
 ## [1] "classe"
 ```
 
@@ -55,6 +57,7 @@ testing <-testing[,colSums(is.na(testing)) == 0]
 Checking the column names of traning dataset
 ```{r}
 head(colnames(training))
+
 ## [1] "X"                    "user_name"            "raw_timestamp_part_1"
 ## [4] "raw_timestamp_part_2" "cvtd_timestamp"       "new_window"
 ```
@@ -86,6 +89,7 @@ qplot(classe, fill = "4", data=training_data2, main="Distribution of Classes")
 
 ```{r}
 names(training_data2[,-53])
+
 ##  [1] "roll_belt"            "pitch_belt"           "yaw_belt"            
 ##  [4] "total_accel_belt"     "gyros_belt_x"         "gyros_belt_y"        
 ##  [7] "gyros_belt_z"         "accel_belt_x"         "accel_belt_y"        
@@ -113,6 +117,7 @@ model_tree <- rpart(classe ~ ., data=training_data2, method="class")
 prediction_tree <- predict(model_tree, testing_data, type="class")
 class_tree <- confusionMatrix(prediction_tree, testing_data$classe)
 class_tree
+
 ## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -158,6 +163,7 @@ forest_model <- randomForest(classe ~ ., data=training_data2, method="class")
 prediction_forest <- predict(forest_model, testing_data, type="class")
 random_forest <- confusionMatrix(prediction_forest, testing_data$classe)
 random_forest
+
 ## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -197,6 +203,7 @@ Prediction Algorithm and Confusion Matrix
 ```{r}
 prediction1 <- predict(forest_model, newdata=testing_data)
 confusionMatrix(prediction1, testing_data$classe)
+
 ## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -231,5 +238,4 @@ confusionMatrix(prediction1, testing_data$classe)
 ```
 The Random Forest is a much better predictive model than the Decision Tree, which has a larger accuracy (99.91%).Therefore, we don’t need to consider more important predictors for the Random Forest model
 
-
-In this study, the characteristics of predictors for both traning and testing datasets (train and test) are reduced. These characteristics are the percentage of NAs values, low variance, correlation and skewness. Therefore, the variables of the data sets are scaled. The training dataset is splitted into subtraining and validation parts to construct a predictive model and evaluate its accuracy. Decision Tree and Random Forest are applied.The Random Forest is a much better predictive model than the Decision Tree, which has a larger accuracy (99.91%).
+The characteristics of predictors for both traning and testing datasets (train and test) are reduced. These characteristics are the percentage of NAs values, low variance, correlation and skewness. Therefore, the variables of the data sets are scaled. The training dataset is splitted into subtraining and validation parts to construct a predictive model and evaluate its accuracy. Decision Tree and Random Forest are applied.The Random Forest is a much better predictive model than the Decision Tree, which has a larger accuracy (99.91%).
